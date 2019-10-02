@@ -23,33 +23,15 @@ export class CitiesComponent implements OnInit {
 
 
   ngOnInit() {
-    // timer(0, 10000).pipe(
-    //   switchMap(
-    //     () => this.appService.getCities()
-    //     )
-    // ).subscribe(res => {
-    //   this.statusLoading= true;
-    //   this.cities = res;
-    // });
-    this.getCities();
-
+    timer(0, 10000).pipe(
+      switchMap(
+        () => this.appService.getCities()
+        )
+    ).subscribe(res => {
+      this.statusLoading= true;
+      this.cities = res;
+    });
     
-  }
-
-  getCities() {
-    this.statusLoading = false;
-    this.showCity = false;
-    this.appService.getCities()
-      .subscribe(
-        res => {
-          this.statusLoading = true;
-          this.cities = res;
-          if(this.cities.length == 0) {
-            this.noInfo =  true;
-          }
-        },
-        err => console.error(err)
-      );
   }
 
   getCitiy(lat, long ) {
@@ -57,8 +39,6 @@ export class CitiesComponent implements OnInit {
    this.city = this.cities.find(
       city => city.latitude == lat && city.longitude == long
     );
-    console.log('dddd')
-    console.log(this.city)
   }
 
 }
