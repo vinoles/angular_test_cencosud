@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="d-flex justify-content-center" *ngIf="!statusLoading">
+        <div class="spinner-border" role="status">
+        </div>
+        <span>Cargando...</span>
+    </div>
+    <div class="row mb-10" *ngIf="statusLoading && !showCity">
+        <div class="col-md-4 mt-3" *ngFor="let city of cities">
+            <div class="card">
+                <div class="card-body">
+                    <b>{{city.timezone}}</b> {{city.currently.time * 1000 | date: 'MMM d, y, h:mm a'  }}<br>
+                    <b>{{city.currently.summary}}</b><br>
+                    <b>{{city.currently.temperature}} º</b><br>
+                    <button class="btn btn-sm btn-success" (click)="getCitiy(city.latitude, city.longitude )">Ver</button>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-danger col-md-12 mt-3" role="alert" *ngIf="noInfo">
+            No se encontraron datos
+        </div>
+    </div>
+    <div class="row mb-10" *ngIf="showCity">
+        <div class="col-md-12 mt-3">
+            <div class="card">
+                <div class="card-body text-center">                    
+                    <b>{{city.timezone}}</b> {{city.currently.time * 1000 | date: 'MMM d, y, h:mm a'  }}<br>
+                    <b>{{city.currently.summary}}</b><br>
+                    <b>{{city.currently.temperature}} º</b><br>
+                    <h4>Next hours</h4>
+                    <div class="alert alert-info" role="alert"  *ngFor="let hour of city.hourly.data">
+                        {{hour.time * 1000 | date: 'MMM d, y, h:mm a'  }} - {{hour.temperature}} º
+                    </div>
+                    <button class="btn btn-sm btn-success" (click)="showCity=false">
+                       Atras
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
